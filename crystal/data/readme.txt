@@ -1,0 +1,1 @@
+Textures and model by ATI; this sample is a recreation of the ATI Radeon 8500 Sample: 'Candy/Crystal'.

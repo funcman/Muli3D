@@ -1,0 +1,14 @@
+Using Muli 3D on AmigaOS 4
+
+Some notes:
+- Compiling C++ project needs some stack, so you may need to raise the value if it's very low. I use 500000.
+- Use the latest GNU Make (by Steven Solie).
+- You need libpng and libz - these should be included in your SDK.
+- Muli3D is linked with -lauto and it uses newlib.library.
+- Amiga makefiles are named "Makefile.aos4", you can compile them by typing "make -f makefile.aos4".
+- Fullscreen mode is supported (experiment with the boolean flag in demo sources, main.cpp).
+- Keyboard input is not yet supported: demos uses mostly mouse control.
+- Demo window sizes can be varied: for example "Crystal 640 480" sets the inner width to 640 and the inner height to 480.
+
+To Do:
+- Profiling and optimization...

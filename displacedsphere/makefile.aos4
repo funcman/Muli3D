@@ -1,0 +1,28 @@
+# Sample Makefile for AmigaOS4
+
+SHELL    = /bin/sh
+DEFINES  = 
+CFLAGS   = -newlib -Wall $(DEFINES) -fomit-frame-pointer -O3
+CPP      = g++
+SH       = /bin/sh
+LDFLAGS	 = -newlib
+LD       = g++
+STRIP    = strip
+RM       = delete
+INCLUDES = 
+LIBS     =  -L../libappframework/lib -lappframework -L../libmuli3d/lib -lmuli3d -lm -lpng -lz -lauto
+CTARGETS = displacedsphere.cpp main.cpp mycamera.cpp sphere.cpp
+OTARGETS = $(CTARGETS:.cpp=.o)
+EXECUTABLE  = displacedsphere
+
+$(EXECUTABLE): $(OTARGETS)
+	$(LD) $(LDFLAGS) $(OTARGETS) $(LIBS) -o $(EXECUTABLE)
+	$(STRIP) --strip-all $(EXECUTABLE)
+	$(STRIP) --remove-section=".comment" $(EXECUTABLE)
+	$(STRIP) --remove-section=".note" $(EXECUTABLE)
+
+%.o: %.cpp
+	$(CPP) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+clean:
+	$(RM) $(EXECUTABLE) $(OTARGETS)

@@ -1,0 +1,1 @@
+Textures by ATI; this sample is a recreation of the ATI Radeon Sample: 'Query Light Flare'.

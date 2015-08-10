@@ -1,0 +1,175 @@
+Muli3D - a software rendering library                                         |
+Copyright (C) 2004, 2005 Stephan Reiter <streiter@aon.at>                     |
+-------------------------------------------------------------------------------
+Changes listed in reverse chronological order.
+
+November 26th, 2005 - Release v0.8
+- Release comes with a MS Visual Studio .NET 2003 workspace.
+- Cleaned up project workspace.
+- Depthbounding allows the restriction of drawing operations to a specified depth range.
+- Fixed typo CMuli3DVertexFormat::iGetNumVertexElement[e]s().
+- Added copy-constructors to math-classes.
+- Other minor changes which resulted in negligible performance increase.
+
+March 4th, 2005 - Release v0.77
+- Juha Niemimaki <jniemima@mail.student.oulu.fi> did an incredible job at porting Muli3D to AmigaOS 4!
+  His work is included in this release. If you have access to an AmigaOS 4 computer we'd be glad if you
+  could test Muli3D and report problems in case they should appear. Thanks, Juha, for your contribution!
+- Replaced the matrix inversion code, old code produced incorrect results.
+
+February 17th, 2005 - Release v0.75
+- This release comes with four new samples: Crystal, a recreation of an ATI Radeon 8500 sample. Mandelbrot, a sample demonstrating the use of pixel shaders to render fractals. VolumeTexture, which shows the use of volumetric textures. Plus a raytracer, which has been implemented using vertex- and pixel shaders and would be easy to port to vs3.0/ps3.0 graphics hardware.
+- Added a vertex cache and got rid of the limitation which would only allow a certain amount of vertices per draw*primitive-call.
+- DrawIndexedPrimitive: parameter i_iBaseVertexIndex had no effect.
+- Streamlined and split up the math-library into several files similar to the way the muli3d-core is handled.
+- Volume textures can now be used: added the missing function iGetDepth and enabled the texture-creation function.
+- The vertex shader function GetOutputRegisters() is now evaluated before rendering. The same applies to the pixel shader function bMightKillPixels().
+- Added OBJ-model loading support to the application framework.
+- Implemented alpha-blending in the LightFlare-sample.
+
+January 18th, 2005 - Release v0.71
+- Partial derivatives are now calculated correctly.
+- vGetDdx() and vGetDdy() have been combined into a single function returning derivatives with respect to x and y. This reduces the overhead of calling the individiual functions seperately + both derivatives are usually needed anyway.
+- Added a new sample 'Checkerboard', which makes use of partial derivatives to draw an antialiased checkerboard using procedural texturing.
+
+January 11th, 2005 - Release v0.7
+- This release comes with a new, faster and cleaner implementation of the rasterizer core functions.
+- Clipping code received a face lift + supports user clip planes.
+- Scissor testing is implemented through clipping in screenspace.
+- The old mip-mapping code has been dropped: Partial derivatives can now be computed in pixel shaders
+  and are used for miplevel-calculations.
+
+October 2nd, 2004 - Release v0.63
+- Added support for 16-bit backbuffers (formats 565, 555 and 444).
+- Added functions CopyToSurface and CopyToVolume.
+- Wireframe mode now works as expected - proper implementation of line drawing has been included.
+- Added line-thickness control (new renderstate).
+- Changed 'triangle assembler' to 'primitive assembler' allowing primitive-types other than triangle lists in DrawDynamicPrimitive().
+- Had to reintroduce static variables because performance sufferd too much from repeated stack push/pop-ing. Need to find a good/fast multithreading-safe solution ...
+
+September 29th, 2004 - Release v0.6
+- Rendertarget's clear-functions now forward to the new texture-method: Clear().
+- Backface culling is now again performed after clipping - old setup introduced some problems.
+- Added texture locking of sub-regions.
+- Split classes into different files cleaning up the mess in m3dcore.cpp/m3dcore.h.
+- Textures are now composed of several surfaces; rendering to textures has been replaced with rendering to surfaces, which allows rendering to mip-levels other than the first/largest one.
+- The framebuffer has been renamed to colorbuffer.
+- Fixed surface clear-function.
+- Cleaned up texture sampling.
+- Added support for volumes and volumetextures.
+- Got rid of static variables in methods.
+
+September 24th, 2004 - Release v0.55
+- FPU-control functions now set the floating point unit to single(float) precision to speed up divisions and sqrts.
+- Pixel shaders can override the new function bMightKillPixels() to signal the need for pixel-killing support. Not using this feature speeds up depth-only passes significantly!
+- Fixed a memory leak: Present-targets introduced a problem related to reference-counting, which result in neither the device's nor the present target's destructor being called.
+- Added support for triangle-shaders, which perform operations per triangle/3 vertices.
+- Added triangle-assemblers + DrawDynamicPrimitive(). Samples 'LightFlare' and 'DisplacedSphere' show the use of triangle assemblers ...
+- Added sample 'DisplacementMapping'
+
+September 12th, 2004 - Release v0.51
+- Ported application-framework to Linux (Input-module not available yet).
+- Framework now compiles to a standalone library, which should reduce compile-time of samples significantly.
+- Added makefiles for samples, which now compile under Linux!
+
+September 10th, 2004 - Release v0.5
+- Cleaned up texture-sampling functions and added support for different texture filters for minification and magnification.
+- Added mip-mapping support for projective texturing.
+- Removed pixel shader type m3dpso_depthonly: If you want to output depth only use m3dpso_colordepth and set renderstate m3drs_colorwriteenable to false.
+- Combined clipspace and screenspace vectors in m3dvsoutput to vector4 vPosition.
+- Backface culling is now performed earlier in the pipeline (before clipping).
+- Modified adaptive subdivision: covered screen area is now calculated with respect to the rendertarget's viewport. Unit is now square pixel; viewport_width * viewport_height covers the whole screen.
+- Renderstate m3drs_automipenable now defaults to false (performance-penality is rather high).
+- Way to platform-independence: Cleaned up code to make it more standard compliant. So-called 'present-targets' take care of presenting render-output to the screen on different platforms.
+  Muli3D comes with present-targets for Windows and the Linux-platform, where it employes the X11 library for output to the screen.
+  Makefile for the Linux-environment was added: Muli3D compiles without errors (at least on my computer ;) ). No samples yet - application framework has to be made platform-independet ...
+- Added new samples 'Bubble' and 'LightFlare': Ports of two DirectX-samples by ATi to Muli3D.
+
+August 30th, 2004 - Release v0.4
+- Made IBase constructor and destructor protected.
+- Functions which returned only s_ok where changed to return-type void.
+- Finally: working mip-mapping, added a new renderstate to control automatic mip-level computation.
+- Vertex shader output register types are determined once and stored in the render-info structure. Speed boost!
+- VS function OutputRegisters() renamed to GetOutputRegisters().
+- Optimized interpolation of shader input registers (used when in subdivision-mode).
+- Shader's Execute()-functions don't receive a pointer to the device anymore. Shaders may use an internal
+  SampleTexture() function for texture sampling now.
+
+August 15th, 2004 - Release v0.35
+- Moved changes.txt to root-dir of the Muli3D-package as it is used as a log for all Muli3D-projects.
+- Added extensive documentation of header-files and interfaces that are visible to the user.
+- Muli3D reference is available at http://muli3d.sourceforge.net/.
+- Added BaseVertexIndex to DrawIndexedPrimitive().
+- Added scissor testing and the pixel shader option to kill pixels.
+- Code clean-up: Renamed some renderstates and function-parameters for consistency.
+- Other cosmetic changes ...
+- Changed fpuTruncate() to _RC_CHOP (was _RC_DOWN before).
+- Fixed CreateRenderCamera() in the application framework: it would always create a depth buffer, even if not requested.
+- IBase-functions are inlined - minor speed boost.
+- Modified matMatrix44Viewport to use integer input values for x, y, width and height.
+- Removed unnecessary typedefs.
+- Renamed struct m3dmiplevel to miplevel and made it private to 2d textures.
+- Added function pGetDevice() to resources.
+- Added function pGetMuli3D() to device.
+- Performance optimization through fetching information necessary for rendering once per draw-batch. (was once per triangle before)
+- Vertex shaders have to override function iUsedRegisters, which returns a bitfield containing information about the used registers. o_iUsedRegisters is not used anymore.
+- Vertex- and pixel shaders now receive shader registers of type shaderregs (formerly vector4).
+- Inlined some more math-functions.
+
+August 7th, 2004 - Release v0.3
+- MSVC workspace including library, all samples + dependencies
+- Cleaned up subdivision stage and added two new modes:
+  - Simple subdivision: simply subdividies each triangle into an user defined number of sub-triangles.
+  - Smooth subdivision: subdivides triangles and smooths the triangle using a method similar to ATI's TruForm.
+  - Adaptive subdivision: Uses the area a triangle is covering on screen as the metric for adaptive triangle subdivision.
+- Optimized texture sampling.
+- Fixed clipping to near plane (it now clips to 0 (like D3D) instead of -w)
+- Code cleanup: Resource Release() functions
+- Resources increase the reference count of their parent like they should.
+  Using device functions like SetVertexShader(), SetTexture() etc. now don't
+  increase the reference count of the set object anymore.
+  Make sure that all used resources are still valid before calling DP()!
+- Sample-update: 'Parallax-mapped Triangle' now demonstrates the use of smooth subdivision.
+  'Displacement-mapped sphere' and 'Displacement-mapped triangle' employ adaptive subdivision for displacement-mapping.
+
+July 24th, 2004 - Release v0.25
+- Shader registers don't have to be used in sequential order anymore.
+- Perspective correct interpolation wasn't working correctly since release v0.20.
+- Pixelshaders may output new pixel depth values. Overload function GetShaderOutput to enable desired behaviour.
+- Subdivision stage subdivides triangles recursively and provides a base for displacement mapping.
+- Two new samples, which show the use of the new subdivision stage for displacement mapping, have been added:
+  'Displacement-mapped sphere' and 'Displacement-mapped triangle'.
+
+July 19th, 2004 - Release v0.21
+- RasterizeLine() was buggy when Z-buffer discarded pixels based on their depth value
+- Cleaned-up the clipping code; trivial accept/reject still needs to be implemented
+
+July 16th, 2004 - Release v0.20
+- Fixed math-library function: matMatrix44RotationQuaternion
+- Fixed a bug related to index-buffers! DrawIndexPrimtive should work as expected now ...
+- Added support for cube-textures!
+- Updated the sample application framework to support cube-textures through the resource-manager.
+- A new sample: 'Environment-mapped sphere' has been included.
+- Minor performance optimizations.
+
+May 30th, 2004 - Release: v0.15
+- Added planes and quaternions to the math-library; basic functions have been implemented.
+- Restructured vector-classes. vecA * vecB is now a compononent-wise multiplication - dot-
+  product has been implemented in a seperate function.
+- Fixed some minor bugs
+- This release includes a first version of the sample application framework.
+- The sample: 'Parallax-mapped triangle' has been included ...
+
+April 30th, 2004 - Initial alpha-release: v0.1
+- Floating-point 2d textures
+- Use textures as colorbuffer or depthbuffer in rendertargets
+- Supported texture formats: 1/2/3/4 floats
+- Bilinear and point-sampling
+- Sampler states: addressing/filtering
+- Vertex- and pixelshaders: Abstract base-class IMuli3DVertexShader, IMuli3DPixelShader
+- VS receive input from vertex streams; vertex format maps stream data to vs-registers
+- VS outputs are perspective correct interpolated and used as input in the PS
+- Vertex and Index-buffers. Index-data either in 16bit or 32bit format.
+- DrawPrimitive/DrawIndexedPrimitive functions to render primitives stored in VBs/IBs
+- Triangle fans / triangle strips / triangle lists supported.
+- Currently uses DirectDraw 7 for output

@@ -1,0 +1,61 @@
+# Makefile for AmigaOS 4
+
+all:
+	cd libmuli3d @@\
+	make -f makefile.aos4
+	cd libappframework @@\
+	make -f makefile.aos4
+	cd bubble @@\
+	make -f makefile.aos4
+	cd checkerboard @@\
+	make -f makefile.aos4
+	cd crystal @@\
+	make -f makefile.aos4
+	cd displacedsphere @@\
+	make -f makefile.aos4
+	cd displacedtri @@\
+	make -f makefile.aos4
+	cd envsphere @@\
+	make -f makefile.aos4
+	cd lightflare @@\
+	make -f makefile.aos4
+	cd mandelbrot @@\
+	make -f makefile.aos4
+	cd parallaxtri @@\
+	make -f makefile.aos4
+	cd raytracer @@\
+	make -f makefile.aos4
+	cd sphericalscalemapping @@\
+	make -f makefile.aos4
+	cd volumetexture @@\
+	make -f makefile.aos4
+
+clean:
+	cd libmuli3d @@\
+	make -f makefile.aos4 clean
+	cd libappframework @@\
+	make -f makefile.aos4 clean
+	cd bubble @@\
+	make -f makefile.aos4 clean
+	cd checkerboard @@\
+	make -f makefile.aos4 clean
+	cd crystal @@\
+	make -f makefile.aos4 clean
+	cd displacedsphere @@\
+	make -f makefile.aos4 clean
+	cd displacedtri @@\
+	make -f makefile.aos4 clean
+	cd envsphere @@\
+	make -f makefile.aos4 clean
+	cd lightflare @@\
+	make -f makefile.aos4 clean
+	cd mandelbrot @@\
+	make -f makefile.aos4 clean
+	cd parallaxtri @@\
+	make -f makefile.aos4 clean
+	cd raytracer @@\
+	make -f makefile.aos4 clean
+	cd sphericalscalemapping @@\
+	make -f makefile.aos4 clean
+	cd volumetexture @@\
+	make -f makefile.aos4 clean

@@ -1,0 +1,24 @@
+# AppFramework Makefile for AmigaOS
+
+SHELL    = /bin/sh
+DEFINES  =
+CFLAGS   = -newlib -Wall $(DEFINES) -fomit-frame-pointer -funroll-loops -O3
+CPP      = g++
+SH       = /bin/sh
+ARADD    = ar rc
+RANLIB   = ranlib
+RM       = delete
+INCLUDES = 
+CTARGETS = src/application.cpp src/camera.cpp src/fileio.cpp src/graphics.cpp src/input.cpp src/resmanager.cpp src/scene.cpp src/stateblock.cpp
+OTARGETS = $(CTARGETS:.cpp=.o)
+LIBRARY  = lib/libappframework.a
+
+$(LIBRARY): $(OTARGETS)
+	$(ARADD) $(LIBRARY) $(OTARGETS)
+	$(RANLIB) $(LIBRARY)
+
+%.o: %.cpp
+	$(CPP) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+clean:
+	$(RM) $(LIBRARY) $(OTARGETS)

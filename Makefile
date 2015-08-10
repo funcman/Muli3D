@@ -1,0 +1,33 @@
+# Makefile for Linux/X11
+
+all:
+	(cd libmuli3d; make;)
+	(cd libappframework; make;)
+	(cd bubble; make;)
+	(cd checkerboard; make;)
+	(cd crystal; make;)
+	(cd displacedsphere; make;)
+	(cd displacedtri; make;)
+	(cd envsphere; make;)
+	(cd lightflare; make;)
+	(cd mandelbrot; make;)
+	(cd parallaxtri; make;)
+	(cd raytracer; make;)
+	(cd sphericalscalemapping; make;)
+	(cd volumetexture; make;)
+
+clean:
+	(cd libmuli3d; make clean;)
+	(cd libappframework; make clean;)
+	(cd bubble; make clean;)
+	(cd checkerboard; make clean;)
+	(cd crystal; make clean;)
+	(cd displacedsphere; make clean;)
+	(cd displacedtri; make clean;)
+	(cd envsphere; make clean;)
+	(cd lightflare; make clean;)
+	(cd mandelbrot; make clean;)
+	(cd parallaxtri; make clean;)
+	(cd raytracer; make clean;)
+	(cd sphericalscalemapping; make clean;)
+	(cd volumetexture; make clean;)

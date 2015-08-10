@@ -1,0 +1,2 @@
+Feel free to use this framework as a base for your Muli3D-projects!
+- Stephan Reiter, May 30th, 2004
